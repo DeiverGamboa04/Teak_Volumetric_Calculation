@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1040424162007",
+    "project_id": "calculomanual",
+    "storage_bucket": "calculomanual.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1040424162007:android:c439d214fc82f55f7bd692",
+        "android_client_info": {
+          "package_name": "com.example.teakvolumetriccalculation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEtsJu9YRGoc1T32iCfg1-zXTETHR7b8U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

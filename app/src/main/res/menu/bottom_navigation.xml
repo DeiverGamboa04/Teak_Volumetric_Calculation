@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/delete"
+        android:title="Eliminar"
+        android:icon="@drawable/baseline_delete_24"/>
+    <item
+        android:id="@+id/ssharre"
+        android:title="Compartir"
+        android:icon="@drawable/baseline_share20_24"/>
+    <item
+        android:id="@+id/create"
+        android:title="Crear"
+        android:icon="@drawable/baseline_create_24"/>
+    <item
+        android:id="@+id/down"
+        android:title="Descargar"
+        android:icon="@drawable/baseline_download_24"/>
+</menu>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="background_color">#FFFFFF</color>
+    <color name="textcolor">#000000</color>
+
+    <color name="green_blue">#1f3a3d</color>
+    <color name="blue_green">#1f3438</color>
+    <color name="green">#38CA3E</color>
+    <color name="green_dark">#037E08</color>
+
+    <color name="celeste">#94B9FF</color>
+    <color name="azulado">#00A08C</color>
+    <color name="azulado_celeste">#00B08D</color>
+    <color name="azulado_celeste_verde">#00C08E</color>
+</resources>

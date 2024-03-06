@@ -330,8 +330,8 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
            modelD.close();
 
 
-           String[] classesAlturaC = {"6", "8", "10"};
-           String[] classesDiametro = {"0.3565", "0.3183", "0.2324", "0.2419", "0.1337", "0.3311", "0.2578", "0.3056", "0.1655", "0.3151", "0.2165"};
+           String[] classesAlturaC = {"5", "6", "8", "10"};
+           String[] classesDiametro = {"0.3565", "0.3183", "0.2324", "0.2419", "0.1337", "0.3311", "0.2578", "0.3056", "0.1655", "0.3151", "0.2165", "0.2228", "0.2706", "0.296"};
 
            float alturaComercialValue = Float.parseFloat(classesAlturaC[maxPosAltur]);
            float diametroValue = Float.parseFloat(classesDiametro[maxPosDiam]);

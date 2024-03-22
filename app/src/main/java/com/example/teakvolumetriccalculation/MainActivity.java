@@ -51,6 +51,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.vision.text.Text;
 
 import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.IOException;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
 
     Bitmap mSelectedImage;
     ImageView mImageView;
-    TextView txtResults;
+    TextView txtResults, textvolumenapro;
 
     DrawerLayout drawerLayout;
     ImageView menu;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
         setContentView(R.layout.activity_main);
         mImageView = findViewById(R.id.image_view);
         txtResults = findViewById(R.id.txtresults);
+        textvolumenapro = findViewById(R.id.textvolumenapro);
 
         drawerLayout = findViewById(R.id.drawerLayout);
         menu = findViewById(R.id.menu);
@@ -235,7 +237,6 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
                 try {
                     mSelectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), dat);
                 } catch (IOException e) {
-                    /*throw new RuntimeException(e);*/
                     e.printStackTrace();
                 }
                 mImageView.setImageBitmap(mSelectedImage);
@@ -248,7 +249,7 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
     }
 
    public void calculo(Bitmap mSelectedImage){
-
+        //Calculo de la formula
        try {
             ModelAlturc modelA = ModelAlturc.newInstance(getApplicationContext());
 
@@ -319,10 +320,10 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
 
            int maxPosDiam = 0;
            float maxDia = 0;
-           for(int i = 0; i < diametro.length; i++){
-               if(diametro[i] > maxDia){
-                   maxDia = diametro[i];
-                   maxPosDiam = i;
+           for(int d = 0; d < diametro.length; d++){
+               if(diametro[d] > maxDia){
+                   maxDia = diametro[d];
+                   maxPosDiam = d;
                }
            }
 
@@ -330,8 +331,8 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
            modelD.close();
 
 
-           String[] classesAlturaC = {"5", "6", "8", "10"};
-           String[] classesDiametro = {"0.3565", "0.3183", "0.2324", "0.2419", "0.1337", "0.3311", "0.2578", "0.3056", "0.1655", "0.3151", "0.2165", "0.2228", "0.2706", "0.296"};
+           String[] classesAlturaC = {"5", "6", "7", "8", "9", "10", "11"};
+           String[] classesDiametro = {"0.1337", "0.1655", "0.1719", "0.2165", "0.2228", "0.2324", "0.2387", "0.2547", "0.2578", "0.2674", "0.2706", "0.2960", "0.3056", "0.3119", "0.3151", "0.3183", "0.3215", "0.3310", "0.3374", "0.3565", "0.3692"};
 
            float alturaComercialValue = Float.parseFloat(classesAlturaC[maxPosAltur]);
            float diametroValue = Float.parseFloat(classesDiametro[maxPosDiam]);
@@ -341,11 +342,21 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
            float constante = 0.7854f;
            float volumen = (float) Math.pow(diametroValue, 2) * alturaComercialValue * factorDeForma * constante;
 
-           String resultadoVoluemen = String.format("%.4f", volumen); // Para dos decimales
+           /*float volumenaltur =  diametroValue ;*/
+
+           //codigo para obtener dos numeros decimales
+           String resultadoVoluemen = String.format("%.2f", volumen); // Para cuatros decimales
 
            //Muestra del resultado de la fórmula em txtResults
            txtResults.setText("Volumen = " + resultadoVoluemen);
 
+           float diametroaaño = 0.03f;
+           float alturaaaño = 1.6f;
+           float volumaaño = (float) Math.pow(diametroValue, 2) + diametroaaño * alturaComercialValue + alturaaaño * factorDeForma * constante;
+
+           String resuvolumaño = String.format("%.2f", volumaaño);
+
+           textvolumenapro.setText("Volumen de aproximación de 1 año = " + resuvolumaño);
 
         } catch (IOException e) {
             // TODO Handle the exception
@@ -359,6 +370,7 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
     public void Limpiarfx(View v) {
         /*Limpiar*/
         txtResults.setText("");
+        textvolumenapro.setText("");
         mImageView.setImageDrawable(null);
         mImageView.setImageBitmap(null);
     }

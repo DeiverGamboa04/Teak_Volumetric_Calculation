@@ -332,7 +332,7 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
 
 
            String[] classesAlturaC = {"5", "6", "7", "8", "9", "10", "11"};
-           String[] classesDiametro = {"0.1337", "0.1655", "0.1719", "0.2165", "0.2228", "0.2324", "0.2387", "0.2547", "0.2578", "0.2674", "0.2706", "0.2960", "0.3056", "0.3119", "0.3151", "0.3183", "0.3215", "0.3310", "0.3374", "0.3565", "0.3692"};
+           String[] classesDiametro = {"0.3565", "0.1655", "0.1719", "0.2165", "0.2228", "0.2324", "0.2387", "0.2547", "0.2578", "0.2674", "0.2706", "0.2960", "0.3056", "0.3119", "0.3151", "0.3183", "0.3215", "0.3310", "0.3374", "0.1337", "0.3692"};
 
            float alturaComercialValue = Float.parseFloat(classesAlturaC[maxPosAltur]);
            float diametroValue = Float.parseFloat(classesDiametro[maxPosDiam]);
@@ -342,7 +342,7 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
            float constante = 0.7854f;
            float volumen = (float) Math.pow(diametroValue, 2) * alturaComercialValue * factorDeForma * constante;
 
-           /*float volumenaltur =  diametroValue ;*/
+           /*float volumenaltur =  alturaComercialValue ;*/
 
            //codigo para obtener dos numeros decimales
            String resultadoVoluemen = String.format("%.2f", volumen); // Para cuatros decimales

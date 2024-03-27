@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/successDes"
-            android:text="Tomar las fotografia a una distancia de 5 metros y al Diametro a la altura del pecho (DAP) de 1.30 metros en las plantaciones."
+            android:text="Tomar las fotografia a una distancia de 5 metros y a la altura del pecho y una distancia del pecho de 1 metro."
             android:textColor="@color/black"
             android:gravity="center_horizontal"
             android:textSize="18sp"

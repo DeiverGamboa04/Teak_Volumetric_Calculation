@@ -146,7 +146,7 @@ public class CalculoManualActivity extends AppCompatActivity {
 
 
         // Calcular el resultado de aproximación de un año
-        double result = Math.pow(diametro, 2) + 0.037 * altura + 3.28 * factorForma * constante;
+        double result = Math.pow(diametro, 2) + 0.03 * altura + 1.6 * factorForma * constante;
 
         // Formatear el resultado a dos decimales
         String resultFormateado = String.format("%.2f", result); // Para dos decimales

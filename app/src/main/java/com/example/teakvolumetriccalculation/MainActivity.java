@@ -1,39 +1,32 @@
 package com.example.teakvolumetriccalculation;
 
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import org.tensorflow.lite.Interpreter;
-
 import java.nio.ByteOrder;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.pm.PackageManager;
-import android.content.res.AssetFileDescriptor;
-import java.io.FileInputStream;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,29 +34,15 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import android.net.Uri;
-import android.os.Environment;
-import androidx.core.content.FileProvider;
 
 import com.example.teakvolumetriccalculation.ml.ModelAlturc;
 import com.example.teakvolumetriccalculation.ml.ModelDiamet;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.mlkit.vision.text.Text;
 
 import org.tensorflow.lite.DataType;
-import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.List;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity /*implements OnSuccessListener<Text>, OnFailureListener*/{
@@ -365,6 +344,20 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
 
     public void Guardarfx(View v) {
         /*Guardar en el repositorio*/
+        showDialog();
+    }
+
+    private void showDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottomsheel);
+
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialoAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
     public void Limpiarfx(View v) {

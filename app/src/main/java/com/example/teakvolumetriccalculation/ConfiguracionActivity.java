@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -16,11 +17,16 @@ public class ConfiguracionActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout inicio, configuracion, compartir, repositorio, tema, calculadora, repositoriomanual;
+    Button btnRepositorio, btnRepositorioManual, btnTema;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracion);
+
+        btnRepositorio = findViewById(R.id.btnRepo);
+        btnRepositorioManual = findViewById(R.id.btnRepoM);
+        btnTema = findViewById(R.id.btnTe);
 
         drawerLayout = findViewById(R.id.drawerLayout);
         menu = findViewById(R.id.menu);
@@ -80,6 +86,26 @@ public class ConfiguracionActivity extends AppCompatActivity {
                 redirecActivity(ConfiguracionActivity.this, RepositorioManualActivity.class);
             }
         });
+
+        btnRepositorio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirecActivity(ConfiguracionActivity.this, RepositorioActivity3.class);
+            }
+        });
+        btnRepositorioManual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirecActivity(ConfiguracionActivity.this, RepositorioManualActivity.class);
+            }
+        });
+        btnTema.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirecActivity(ConfiguracionActivity.this, TemaActivity.class);
+            }
+        });
+
     }
     public static void openDrawer(DrawerLayout drawerLayout){
         drawerLayout.openDrawer(GravityCompat.START);

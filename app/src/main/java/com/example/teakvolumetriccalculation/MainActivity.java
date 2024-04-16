@@ -540,15 +540,6 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheel);
 
-        /*LinearLayout listhectarea = dialog.findViewById(R.id.listhectarea);
-
-        listhectarea.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                init();
-                Toast.makeText(MainActivity.this, "Guardar en la Parcela corespondiente la informaicón", Toast.LENGTH_SHORT).show();
-            }
-        });*/
 
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -556,20 +547,6 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialoAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
-
-    /*public void init(){
-        hectareaList = new ArrayList<>();
-        hectareaList.add(new ListHectarea("Hectarea 1", "8 parcelas"));
-        hectareaList.add(new ListHectarea("Hectarea 2", "7 parcelas"));
-        hectareaList.add(new ListHectarea("Hectarea 3", "9 parcelas"));
-        hectareaList.add(new ListHectarea("Hectarea 4", "5 parcelas"));
-
-        ListAdapterH listAdapterH = new ListAdapterH(hectareaList, this);
-        RecyclerView recyclerView = findViewById(R.id.listhectarea);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(listAdapterH);
-    }*/
 
     public void Limpiarfx(View v) {
         /*Limpiar*/

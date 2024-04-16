@@ -14,9 +14,44 @@
         android:background="@color/background_color"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/toolbar"/>
+        <include layout="@layout/toolbar" />
 
+        <Button
+            android:id="@+id/btnRepo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#5DC1B9"
+            android:text="Repositorio"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btnRepoM"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#5DC1B9"
+            android:text="Repositorio Manual"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/btnTe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#5DC1B9"
+            android:text="Tema"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"
+            android:textSize="20sp"/>
+
+        <ImageView
+            android:id="@+id/uteq"
+            android:layout_width="match_parent"
+            android:layout_height="409dp"
+            android:src="@drawable/img"
+            android:layout_marginTop="33dp"/>
 
 
     </LinearLayout>

@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
@@ -38,6 +39,8 @@ public class RepositorioActivity3 extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    TextView txtDatosFirestore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,8 @@ public class RepositorioActivity3 extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.punto);
         setSupportActionBar(toolbar);
+
+        txtDatosFirestore = findViewById(R.id.txtDatosFirestore);
 
         drawerLayout = findViewById(R.id.drawerLayout);
         menu = findViewById(R.id.menu);
@@ -155,7 +160,26 @@ public class RepositorioActivity3 extends AppCompatActivity {
     }
 
     public void verDatosFirebase() {
-        db.collection("Hectáreas")
+        TextView txtDatosFirestore = findViewById(R.id.txtDatosFirestore); // Referencia al TextView donde mostrarás los datos
+        StringBuilder datos = new StringBuilder(); // StringBuilder para acumular los datos y mostrarlos
+
+        db.collection("datosParcela")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, document.getId() + " => " + document.getData());
+                            // Añadir cada documento a un StringBuilder
+                            datos.append(document.getId()).append(" => ").append(document.getData().toString()).append("\n\n");
+                        }
+                        // Establecer el texto del TextView
+                        txtDatosFirestore.setText(datos.toString());
+                    } else {
+                        Log.w(TAG, "Error al obtener documentos.", task.getException());
+                        txtDatosFirestore.setText("Error al cargar datos.");
+                    }
+                });
+        /*db.collection("Hectáreas")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -166,7 +190,7 @@ public class RepositorioActivity3 extends AppCompatActivity {
                     } else {
                         Log.w(TAG, "Error al obtener documentos.", task.getException());
                     }
-                });
+                });*/
     }
 
     public void descargarDatosComoPDF() {

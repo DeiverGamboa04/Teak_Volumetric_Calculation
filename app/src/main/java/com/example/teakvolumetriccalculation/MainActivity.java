@@ -1,6 +1,8 @@
 package com.example.teakvolumetriccalculation;
 
 
+import static android.content.ContentValues.TAG;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -10,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -17,13 +20,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.nio.ByteOrder;
 
 import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 
 import android.app.Activity;
@@ -54,6 +60,7 @@ import android.net.Uri;
 import com.example.teakvolumetriccalculation.databinding.ActivityMainBinding;
 import com.example.teakvolumetriccalculation.ml.ModelAlturc;
 import com.example.teakvolumetriccalculation.ml.ModelDiamet;
+import com.google.android.datatransport.backend.cct.BuildConfig;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
@@ -81,10 +88,13 @@ import java.util.Map;
 import java.util.UUID;
 
 
-public class MainActivity extends AppCompatActivity /*implements OnSuccessListener<Text>, OnFailureListener*/{
+public class MainActivity extends AppCompatActivity /*implements OnSuccessListener<Text>, OnFailureListener*/ {
 
     public static int REQUEST_GALLERY = 222;
     public static int REQUEST_CAMERA = 111;
+
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_PICK = 2;
 
 
     StorageReference storageReference;
@@ -102,6 +112,7 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
     LinearLayout inicio, configuracion, compartir, repositorio, tema, calculadora, repositoriomanual;
 
     int imageSize = 224;
+    private String currentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +125,7 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
         txtResults = findViewById(R.id.txtresults);
         textvolumenapro = findViewById(R.id.textvolumenapro);
         btGuar = findViewById(R.id.btGuar);
+
 
         drawerLayout = findViewById(R.id.drawerLayout);
         menu = findViewById(R.id.menu);
@@ -173,17 +185,19 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
                 redirecActivity(MainActivity.this, RepositorioManualActivity.class);
             }
         });
+    }
 
-        }
-    public static void openDrawer(DrawerLayout drawerLayout){
+    public static void openDrawer(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
     }
-    public static void closeDrawer(DrawerLayout drawerLayout){
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+
+    public static void closeDrawer(DrawerLayout drawerLayout) {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
     }
-    public static void redirecActivity(Activity activity, Class secondActivity){
+
+    public static void redirecActivity(Activity activity, Class secondActivity) {
         Intent intent = new Intent(activity, secondActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
@@ -214,26 +228,24 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
                     startActivityForResult(intentCamara, REQUEST_CAMERA);
                 }
                 else {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
                 }
             }
         });
     }
+
     private File createImageFile() throws IOException {
-        // Crea un nombre de archivo de imagen
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,
-                ".jpg",
-                storageDir
+                timeStamp,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
         );
-
-        // Guarda un archivo: ruta para usar con intents ACTION_VIEW
-        imagenUri = Uri.fromFile(image);
         return image;
     }
+
     public void showSuccessDialog(final Runnable postDialogAction) {
         ConstraintLayout successConstrainLayout = findViewById(R.id.successConstrainLayout);
         View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.success_dialog, successConstrainLayout);
@@ -261,12 +273,11 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
 
     private Uri bitmapToUri(Bitmap bitmap) {
         // Asegúrate de tener permiso para escribir en el almacenamiento externo
-        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MiApp");
-        if (!storageDir.exists()) {
-            if (!storageDir.mkdirs()) {
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Teak Volumetric Calculation");
+        if (!storageDir.exists() && !storageDir.mkdirs()) {
                 Log.e("TAG", "Error al crear el directorio");
                 return null;
-            }
+
         }
 
         // Crea un archivo de imagen
@@ -288,52 +299,59 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
         } else {
             return Uri.fromFile(file);
         }
+
+        /*String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        File storageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "MyAppImages");
+        if (!storageDir.exists()) {
+            if (!storageDir.mkdirs()) {
+                Log.e("TAG", "Failed to create directory");
+                return null;
+            }
+        }
+
+        // Crea el archivo
+        File imageFile = new File(storageDir, "JPEG_" + timeStamp + ".jpg");
+        try (FileOutputStream out = new FileOutputStream(imageFile)) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
+            out.flush();
+        } catch (IOException e) {
+            Log.e("TAG", "Error saving image", e);
+            return null;
+        }
+
+        // Retorna el Uri utilizando un FileProvider
+        return FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", imageFile);*/
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CAMERA){
-            Bitmap mSelectedImage = (Bitmap) data.getExtras().get("data");
-            // Otras operaciones con el bitmap...
-            imagenUri = bitmapToUri(mSelectedImage); // Convierte el bitmap a Uri
-            mImageView.setImageBitmap(mSelectedImage);
-            calculo(imagenUri);
-        }
-        else if (data != null && data.getData() != null){
-            Uri dat = data.getData();
-            imagenUri = dat; // Aquí ya tienes un Uri, no necesitas convertirlo
-            mImageView.setImageURI(dat);
-            calculo(imagenUri);
-        }
-        /*if (resultCode == RESULT_OK){
-            if(requestCode == REQUEST_CAMERA){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CAMERA) {
                 Bitmap mSelectedImage = (Bitmap) data.getExtras().get("data");
+                // Otras operaciones con el bitmap...
                 int dimension = Math.min(mSelectedImage.getWidth(), mSelectedImage.getHeight());
                 mSelectedImage = ThumbnailUtils.extractThumbnail(mSelectedImage, dimension, dimension);
+                /*imagenUri = bitmapToUri(mSelectedImage);*/
                 mImageView.setImageBitmap(mSelectedImage);
+                /*imagenUri = bitmapToUri(mSelectedImage);*/
+                /*calculo(imagenUri);*/
 
-                mSelectedImage = Bitmap.createScaledBitmap(mSelectedImage, imageSize, imageSize, false);
-                calculo(mSelectedImage);
 
-            }else{
+                // Otras operaciones con el bitmap...
+                /*imagenUri = bitmapToUri(mSelectedImage); // Convierte el bitmap a Uri*/
+                /*mImageView.setImageBitmap(mSelectedImage);
+                calculo(imagenUri);*/
+            } else if (data != null && data.getData() != null) {
                 Uri dat = data.getData();
-                Bitmap  mSelectedImage = null;
-                try {
-                    mSelectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), dat);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                mImageView.setImageBitmap(mSelectedImage);
-
-                mSelectedImage = Bitmap.createScaledBitmap(mSelectedImage, imageSize, imageSize, false);
-                calculo(mSelectedImage);
+                imagenUri = dat; // Aquí ya tienes un Uri, no necesitas convertirlo
+                mImageView.setImageURI(dat);
+                calculo(imagenUri);
             }
         }
-        super.onActivityResult(requestCode, resultCode, data);*/
     }
 
-   public void calculo(Uri imagenUri){
+    public void calculo(Uri imagenUri){
         //Calculo de la formula
        try {
            Bitmap mSelectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imagenUri);
@@ -531,21 +549,6 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
             Toast.makeText(this, "No hay imagen para subir", Toast.LENGTH_SHORT).show();
         }
 
-        /*showDialog();*/
-    }
-
-
-    private void showDialog() {
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.bottomsheel);
-
-
-        dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialoAnimation;
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
     public void Limpiarfx(View v) {

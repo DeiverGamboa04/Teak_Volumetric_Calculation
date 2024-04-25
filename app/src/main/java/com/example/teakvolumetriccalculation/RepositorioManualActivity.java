@@ -3,14 +3,25 @@ package com.example.teakvolumetriccalculation;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.example.teakvolumetriccalculation.adapter.VolumMAdapter;
+import com.example.teakvolumetriccalculation.modelo.VolumM;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RepositorioManualActivity extends AppCompatActivity {
 
@@ -18,11 +29,26 @@ public class RepositorioManualActivity extends AppCompatActivity {
     ImageView menu;
     LinearLayout inicio, configuracion, compartir, repositorio, tema, calculadora, repositoriomanual;
 
+    private RecyclerView recyclerView;
+    private VolumMAdapter adapter;
+    private List<VolumM> listaVolumen;
+    private FirebaseFirestore db;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repositorio_manual);
+
+        db = FirebaseFirestore.getInstance();
+
+        recyclerView = findViewById(R.id.RecyclerViewManual);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        listaVolumen = new ArrayList<>();
+        adapter = new VolumMAdapter(this, listaVolumen);
+        recyclerView.setAdapter(adapter);
 
         drawerLayout = findViewById(R.id.drawerLayout);
         menu = findViewById(R.id.menu);
@@ -82,6 +108,8 @@ public class RepositorioManualActivity extends AppCompatActivity {
                 recreate();
             }
         });
+
+        loadData();
     }
     public static void openDrawer(DrawerLayout drawerLayout){
         drawerLayout.openDrawer(GravityCompat.START);
@@ -102,5 +130,22 @@ public class RepositorioManualActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         closeDrawer(drawerLayout);
+    }
+
+    private void loadData() {
+        db.collection("calculomanualvolumen")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        listaVolumen.clear(); // Limpiar la lista antes de agregar elementos nuevos
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            VolumM volum = document.toObject(VolumM.class);
+                            listaVolumen.add(volum);
+                        }
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Log.d("Firebase Error", "Error al obtener documentos: ", task.getException());
+                    }
+                });
     }
 }

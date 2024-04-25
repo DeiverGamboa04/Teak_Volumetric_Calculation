@@ -164,7 +164,7 @@ public class CalculoManualActivity extends AppCompatActivity {
        String resu = results.getText().toString().trim();
 
         // Verifica que los campos no estén vacíos
-        if(!diame.isEmpty() || !altur.isEmpty() || !fact.isEmpty() || !cons.isEmpty() || !txtre.isEmpty() || !resu.isEmpty()){
+        if(!diame.isEmpty() && !altur.isEmpty() && !fact.isEmpty() && !cons.isEmpty() && !txtre.isEmpty() && !resu.isEmpty()){
             // Si algún campo tiene datos, procede a guardar en Firestore
             postVolum(diame, altur, fact, cons, txtre, resu);
         }else {
@@ -174,12 +174,12 @@ public class CalculoManualActivity extends AppCompatActivity {
 
     private void postVolum(String diame, String altur, String fact, String cons, String txtre, String resu) {
         Map<String, String> map = new HashMap<>();
-        map.put("Diámetro", diame);
-        map.put("Altura Comercial", altur);
-        map.put("Factor de Forma", fact);
-        map.put("Constante", cons);
-        map.put("Volumen", txtre);
-        map.put("Volumen aproximado de 1 año", resu);
+        map.put("diametro", diame);
+        map.put("alturaComercial", altur);
+        map.put("factorForma", fact);
+        map.put("constante", cons);
+        map.put("volumen", txtre);
+        map.put("volumenAproximado", resu);
 
         mfirestorecalculomanual.collection("calculomanualvolumen")
                 .add(map)

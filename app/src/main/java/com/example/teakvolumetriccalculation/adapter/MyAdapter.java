@@ -12,17 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teakvolumetriccalculation.R;
 import com.example.teakvolumetriccalculation.modelo.User;
+import com.example.teakvolumetriccalculation.modelo.VolumM;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    Context context;
-    ArrayList<User> userArrayList;
+    private Context context1;
+    private List<User> userArrayList;
 
-    public MyAdapter(Context context, ArrayList<User> userArrayList) {
-        this.context = context;
+    public MyAdapter(Context context1, List<User> userArrayList) {
+        this.context1 = context1;
         this.userArrayList = userArrayList;
     }
 
@@ -30,19 +32,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Optimiza la inflación al no adjuntar inmediatamente al ViewGroup (parent)
-        View v = LayoutInflater.from(context).inflate(R.layout.item, parent, false);
+        View v = LayoutInflater.from(context1).inflate(R.layout.item, parent, false);
         return new MyViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
         User user = userArrayList.get(position);
+        holder.imageUrl.setText(String.format("imageUrl: %s", user.getImageUrl()));
+        holder.volumen.setText(String.format("volumen: %s", user.getVolumen()));
+        holder.volumenAprox.setText(String.format("volumen aproximado en 1 año: %s", user.getVolumenAprox()));
 
         // Cargar imagen usando Picasso o similar
-        Picasso.get().load(user.getImagenUrl()).into(holder.imageView);
+        /*Picasso.get().load(user.getImagenUrl()).into(holder.imageView);
 
         holder.volumen.setText(String.format("%.2f", user.getVolumen())); // Asumiendo que volumen es double
-        holder.volumenAprox.setText(String.format("%.2f", user.getVolumenAprox())); // Formato para decimales
+        holder.volumenAprox.setText(String.format("%.2f", user.getVolumenAprox())); // Formato para decimales*/
     }
 
     @Override
@@ -51,15 +56,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-
-        ImageView imageView; // ImageView para mostrar la imagen
-        TextView volumen, volumenAprox;
+        TextView imageUrl, volumen, volumenAprox;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.imageView);
-            volumen = itemView.findViewById(R.id.tvvolumen);
-            volumenAprox = itemView.findViewById(R.id.tvvolumenapro);
+            imageUrl = itemView.findViewById(R.id.textViewImaUrl);
+            volumen = itemView.findViewById(R.id.textViewVolum);
+            volumenAprox = itemView.findViewById(R.id.textViewVolumAprox);
         }
     }
 

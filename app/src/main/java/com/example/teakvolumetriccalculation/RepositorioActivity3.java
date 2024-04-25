@@ -7,7 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.teakvolumetriccalculation.adapter.MyAdapter;
+import com.example.teakvolumetriccalculation.adapter.VolumMAdapter;
+import com.example.teakvolumetriccalculation.modelo.User;
+import com.example.teakvolumetriccalculation.modelo.VolumM;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -30,6 +36,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RepositorioActivity3 extends AppCompatActivity {
 
@@ -37,7 +45,10 @@ public class RepositorioActivity3 extends AppCompatActivity {
     ImageView menu;
     LinearLayout inicio, configuracion, compartir, repositorio, tema, calculadora, repositoriomanual;
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private RecyclerView recyclerViewini;
+    private MyAdapter adapterm;
+    private List<User> userArrayList;
+    private FirebaseFirestore dbd;
 
     TextView txtDatosFirestore;
 
@@ -48,6 +59,16 @@ public class RepositorioActivity3 extends AppCompatActivity {
 
         /*Toolbar toolbar = findViewById(R.id.punto);
         setSupportActionBar(toolbar);*/
+
+        dbd = FirebaseFirestore.getInstance();
+
+        recyclerViewini = findViewById(R.id.RecyclerInicio);
+        recyclerViewini.setHasFixedSize(true);
+        recyclerViewini.setLayoutManager(new LinearLayoutManager(this));
+
+        userArrayList = new ArrayList<>();
+        adapterm = new MyAdapter(this, userArrayList);
+        recyclerViewini.setAdapter(adapterm);
 
 
         drawerLayout = findViewById(R.id.drawerLayout);
@@ -108,6 +129,8 @@ public class RepositorioActivity3 extends AppCompatActivity {
                 redirecActivity(RepositorioActivity3.this, RepositorioManualActivity.class);
             }
         });
+
+        loadDatas();
     }
 
     public static void openDrawer(DrawerLayout drawerLayout) {
@@ -137,6 +160,23 @@ public class RepositorioActivity3 extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bottom_navigation, menu);
         return false;
+    }
+
+    private void loadDatas() {
+        dbd.collection("datosParcela")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        userArrayList.clear(); // Limpiar la lista antes de agregar elementos nuevos
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            User user = document.toObject(User.class);
+                            userArrayList.add(user);
+                        }
+                        adapterm.notifyDataSetChanged();
+                    } else {
+                        Log.d("Firebase Error", "Error al obtener documentos: ", task.getException());
+                    }
+                });
     }
 
     /*@Override

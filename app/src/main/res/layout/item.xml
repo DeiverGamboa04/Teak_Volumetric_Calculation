@@ -14,45 +14,60 @@
         android:layout_marginStart="16dp"
         android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+
+        <TextView
+            android:id="@+id/textViewImaUrl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="imageUrl :"
+            android:textSize="19sp"
+            android:textColor="@color/black"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+
+        <TextView
+            android:id="@+id/textViewVolum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="volumen :"
+            android:textSize="19sp"
+            android:textColor="@color/black"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_background" /> <!-- Placeholder image -->
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="3">
-
-                <TextView
-                    android:id="@+id/tvvolumen"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Volumen: 0.19"
-                    android:textSize="20sp"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/tvvolumenapro"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="60dp"
-                    android:text="Volumen de aproximación de 1 año: 1.12"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/textViewVolumAprox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="volumenAprox :"
+                android:textSize="19sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="8dp"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 

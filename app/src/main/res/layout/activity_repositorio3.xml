@@ -19,10 +19,9 @@
             layout="@layout/toolbar"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Recycler"
+            android:id="@+id/RecyclerInicio"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="@+id/include" />
+            android:layout_height="match_parent" />
 
 
 

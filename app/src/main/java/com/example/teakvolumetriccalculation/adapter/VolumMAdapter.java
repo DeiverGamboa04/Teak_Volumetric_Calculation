@@ -41,24 +41,6 @@ public class VolumMAdapter extends RecyclerView.Adapter<VolumMAdapter.ViewHolder
         holder.constante.setText(String.format("Constante: %s", volum.getConstante()));
         holder.volumen.setText(String.format("Volumen: %s", volum.getVolumen()));
         holder.volumenAproximado.setText(String.format("Volumen aproximado de 1 año: %s", volum.getVolumenAproximado()));
-
-
-
-
-        /*holder.diametro.setText(String.format("diametro: %.2f", volum.getDiametro()));
-        holder.alturaComercial.setText("alturaComercial: " + volum.getAlturaComercial());
-        holder.factorForma.setText(String.format("factorForma: %.2f", volum.getFactorForma()));
-        holder.constante.setText(String.format("constante: %.2f", volum.getConstante()));
-        holder.volumen.setText(String.format("volumen: %.2f", volum.getVolumen()));
-        holder.volumenAproximado.setText(String.format("volumenAproximado: %.2f", volum.getVolumenAproximado()));*/
-
-        /*holder.diametro.setText(String.format("Diámetro: %.2f", volum.getDiametro()));
-        holder.alturaComercial.setText("Altura comercial: " + volum.getAlturaComercial());
-        holder.factorForma.setText(String.format("Factor de forma: %.2f", volum.getFactorForma()));
-        holder.constante.setText(String.format("Constante: %.2f", volum.getConstante()));
-        holder.volumen.setText(String.format("Volumen: %.2f", volum.getVolumen()));
-        holder.volumenAproximado.setText(String.format("Volumen aproximado de 1 año: %.2f", volum.getVolumenAproximado()));*/
-
     }
 
     @Override

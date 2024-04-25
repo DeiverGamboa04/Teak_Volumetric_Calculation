@@ -2,40 +2,40 @@ package com.example.teakvolumetriccalculation.modelo;
 
 public class User {
 
-    private String imagenUrl;
-    private float volumen, volumenAprox; // Cambiado a double para soportar decimales
+    String imageUrl;
+    String volumen;
+    String volumenAprox;
 
     public User() {}
 
     // Constructor
-    public User(String imagenUrl,float volumen, float volumenAprox) {
-        this.imagenUrl = imagenUrl;
+    public User(String imageUrl,String volumen, String volumenAprox) {
+        this.imageUrl = imageUrl;
         this.volumen = volumen;
         this.volumenAprox = volumenAprox;
     }
 
-    // Getters y setters
-    public String getImagenUrl() {
-        return imagenUrl;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImagenUrl(String imagenUrl) {
-        this.imagenUrl = imagenUrl;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public double getVolumen() {
+    public String getVolumen() {
         return volumen;
     }
 
-    public void setVolumen(float volumen) {
+    public void setVolumen(String volumen) {
         this.volumen = volumen;
     }
 
-    public double getVolumenAprox() {
+    public String getVolumenAprox() {
         return volumenAprox;
     }
 
-    public void setVolumenAprox(float volumenAprox) {
+    public void setVolumenAprox(String volumenAprox) {
         this.volumenAprox = volumenAprox;
     }
 

@@ -8,34 +8,53 @@
     android:id="@+id/drawerLayout"
     tools:context=".TemaActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/background_color">
 
         <include
+            android:id="@+id/include12"
             layout="@layout/toolbar"/>
+
+        <ImageView
+            android:id="@+id/ITuteqTele"
+            android:layout_width="177dp"
+            android:layout_height="144dp"
+            android:layout_marginTop="28dp"
+            android:src="@drawable/img_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include12" />
+
         <TextView
             android:id="@+id/tv_mode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tema"
-            android:textSize="20sp"
-            android:textColor="@color/textcolor"
+            android:layout_marginTop="24dp"
             android:gravity="center"
-            android:layout_marginTop="10dp"/>
+            android:text="Tema"
+            android:textColor="@color/textcolor"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ITuteqTele" />
 
         <Switch
             android:id="@+id/mode_switch"
             android:layout_width="136dp"
             android:layout_height="64dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:textSize="10sp" />
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="16dp"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_mode" />
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
         android:layout_width="300dp"

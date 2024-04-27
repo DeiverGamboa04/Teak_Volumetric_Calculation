@@ -39,8 +39,8 @@ public class VolumMAdapter extends RecyclerView.Adapter<VolumMAdapter.ViewHolder
         holder.alturaComercial.setText(String.format("Altura comercial: %s", volum.getAlturaComercial()));
         holder.factorForma.setText(String.format("Factor de forma: %s", volum.getFactorForma()));
         holder.constante.setText(String.format("Constante: %s", volum.getConstante()));
-        holder.volumen.setText(String.format("Volumen: %s", volum.getVolumen()));
-        holder.volumenAproximado.setText(String.format("Volumen aproximado de 1 año: %s", volum.getVolumenAproximado()));
+        holder.volumen.setText(String.format("%s", volum.getVolumen()));
+        holder.volumenAproximado.setText(String.format("%s", volum.getVolumenAproximado()));
     }
 
     @Override

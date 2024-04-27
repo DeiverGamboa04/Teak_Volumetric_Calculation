@@ -1,11 +1,5 @@
 package com.example.teakvolumetriccalculation;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teakvolumetriccalculation.adapter.VolumMAdapter;
 import com.example.teakvolumetriccalculation.modelo.VolumM;
@@ -27,7 +27,7 @@ public class RepositorioManualActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout inicio, configuracion, compartir, repositorio, tema, calculadora, repositoriomanual;
+    LinearLayout inicio, configuracion, repositorio, tema, calculadora, repositoriomanual;
 
     private RecyclerView recyclerView;
     private VolumMAdapter adapter;
@@ -54,11 +54,8 @@ public class RepositorioManualActivity extends AppCompatActivity {
         menu = findViewById(R.id.menu);
         inicio = findViewById(R.id.home);
         configuracion = findViewById(R.id.settings2);
-        compartir = findViewById(R.id.share);
-        repositorio = findViewById(R.id.report2);
         tema = findViewById(R.id.theme);
         calculadora = findViewById(R.id.calculate);
-        repositoriomanual = findViewById(R.id.repositorio);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,18 +75,6 @@ public class RepositorioManualActivity extends AppCompatActivity {
                 redirecActivity(RepositorioManualActivity.this, ConfiguracionActivity.class);
             }
         });
-        compartir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                redirecActivity(RepositorioManualActivity.this, CompartirActivity.class);
-            }
-        });
-        repositorio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                redirecActivity(RepositorioManualActivity.this, RepositorioActivity3.class);
-            }
-        });
         tema.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,12 +85,6 @@ public class RepositorioManualActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 redirecActivity(RepositorioManualActivity.this, CalculoManualActivity.class);
-            }
-        });
-        repositoriomanual.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recreate();
             }
         });
 
@@ -130,6 +109,15 @@ public class RepositorioManualActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         closeDrawer(drawerLayout);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Intent para volver a ConfiguracionActivity
+        super.onBackPressed();
+        Intent intent = new Intent(RepositorioManualActivity.this, ConfiguracionActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void loadData() {

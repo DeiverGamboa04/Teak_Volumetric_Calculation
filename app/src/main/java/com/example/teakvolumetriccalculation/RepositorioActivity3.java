@@ -1,41 +1,26 @@
 package com.example.teakvolumetriccalculation;
 
-import static android.content.ContentValues.TAG;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teakvolumetriccalculation.adapter.MyAdapter;
-import com.example.teakvolumetriccalculation.adapter.VolumMAdapter;
 import com.example.teakvolumetriccalculation.modelo.User;
-import com.example.teakvolumetriccalculation.modelo.VolumM;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +28,8 @@ public class RepositorioActivity3 extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout inicio, configuracion, compartir, repositorio, tema, calculadora, repositoriomanual;
+    LinearLayout inicio, configuracion, repositorio, tema, calculadora, repositoriomanual;
+
 
     private RecyclerView recyclerViewini;
     private MyAdapter adapterm;
@@ -52,6 +38,7 @@ public class RepositorioActivity3 extends AppCompatActivity {
 
     TextView txtDatosFirestore;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +46,7 @@ public class RepositorioActivity3 extends AppCompatActivity {
 
         /*Toolbar toolbar = findViewById(R.id.punto);
         setSupportActionBar(toolbar);*/
+
 
         dbd = FirebaseFirestore.getInstance();
 
@@ -75,11 +63,8 @@ public class RepositorioActivity3 extends AppCompatActivity {
         menu = findViewById(R.id.menu);
         inicio = findViewById(R.id.home);
         configuracion = findViewById(R.id.settings2);
-        compartir = findViewById(R.id.share);
-        repositorio = findViewById(R.id.report2);
         tema = findViewById(R.id.theme);
         calculadora = findViewById(R.id.calculate);
-        repositoriomanual = findViewById(R.id.repositorio);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,18 +84,6 @@ public class RepositorioActivity3 extends AppCompatActivity {
                 redirecActivity(RepositorioActivity3.this, ConfiguracionActivity.class);
             }
         });
-        compartir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                redirecActivity(RepositorioActivity3.this, CompartirActivity.class);
-            }
-        });
-        repositorio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recreate();
-            }
-        });
         tema.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,12 +94,6 @@ public class RepositorioActivity3 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 redirecActivity(RepositorioActivity3.this, CalculoManualActivity.class);
-            }
-        });
-        repositoriomanual.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                redirecActivity(RepositorioActivity3.this, RepositorioManualActivity.class);
             }
         });
 
@@ -157,6 +124,15 @@ public class RepositorioActivity3 extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        // Intent para volver a ConfiguracionActivity
+        super.onBackPressed();
+        Intent intent = new Intent(RepositorioActivity3.this, ConfiguracionActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bottom_navigation, menu);
         return false;
@@ -179,27 +155,4 @@ public class RepositorioActivity3 extends AppCompatActivity {
                 });
     }
 
-    /*@Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.delete) {
-            Toast.makeText(this, "Eliminar", Toast.LENGTH_SHORT).show();
-        }
-        if (id == R.id.ssharre) {
-            Toast.makeText(this, "Compartir", Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Observa esta aplicación");
-            intent.putExtra(Intent.EXTRA_TEXT, "En este lugar va el link de la aplicación");
-            startActivity(Intent.createChooser(intent, "Compartír"));
-        }
-        if (id == R.id.create) {
-            Toast.makeText(this, "Crear nueva hectárea", Toast.LENGTH_SHORT).show();
-        }
-        if (id == R.id.down) {
-            Toast.makeText(this, "Descargar", Toast.LENGTH_SHORT).show();
-        }
-        return true;
-    }*/
 }

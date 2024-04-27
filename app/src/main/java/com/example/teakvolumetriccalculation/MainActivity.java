@@ -1,71 +1,42 @@
 package com.example.teakvolumetriccalculation;
 
 
-import static android.content.ContentValues.TAG;
+import android.Manifest;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.lang.ref.WeakReference;
-import java.nio.ByteOrder;
-
-import android.Manifest;
-import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.pm.PackageManager;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.media.ThumbnailUtils;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import android.net.Uri;
-
-import com.example.teakvolumetriccalculation.databinding.ActivityMainBinding;
 import com.example.teakvolumetriccalculation.ml.ModelAlturc;
 import com.example.teakvolumetriccalculation.ml.ModelDiamet;
-import com.google.android.datatransport.backend.cct.BuildConfig;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -75,17 +46,16 @@ import com.google.firebase.storage.UploadTask;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity /*implements OnSuccessListener<Text>, OnFailureListener*/ {
@@ -109,7 +79,7 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout inicio, configuracion, compartir, repositorio, tema, calculadora, repositoriomanual;
+    LinearLayout inicio, configuracion, repositorio, tema, calculadora, repositoriomanual;
 
     int imageSize = 224;
     private String currentPhotoPath;
@@ -131,11 +101,8 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
         menu = findViewById(R.id.menu);
         inicio = findViewById(R.id.home);
         configuracion = findViewById(R.id.settings2);
-        compartir = findViewById(R.id.share);
-        repositorio = findViewById(R.id.report2);
         tema = findViewById(R.id.theme);
         calculadora = findViewById(R.id.calculate);
-        repositoriomanual = findViewById(R.id.repositorio);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,18 +122,6 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
                 redirecActivity(MainActivity.this, ConfiguracionActivity.class);
             }
         });
-        compartir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                redirecActivity(MainActivity.this, CompartirActivity.class);
-            }
-        });
-        repositorio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                redirecActivity(MainActivity.this, RepositorioActivity3.class);
-            }
-        });
         tema.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,12 +132,6 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
             @Override
             public void onClick(View view) {
                 redirecActivity(MainActivity.this, CalculoManualActivity.class);
-            }
-        });
-        repositoriomanual.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                redirecActivity(MainActivity.this, RepositorioManualActivity.class);
             }
         });
     }
@@ -466,13 +415,13 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
            //Muestra del resultado de la fórmula em txtResults
            txtResults.setText("Volumen = " + resultadoVoluemen);
 
-           float diametroaaño = 0.03f;
-           float alturaaaño = 1.6f;
-           float volumaaño = (float) Math.pow(diametroValue, 2) + diametroaaño * alturaComercialValue + alturaaaño * factorDeForma * constante;
+           float diametroaano = 0.03f;
+           float alturaaano = 1.6f;
+           float volumaano = (float) Math.pow(diametroValue + diametroaano, 2) * alturaComercialValue + alturaaano * factorDeForma * constante;
 
-           String resuvolumaño = String.format("%.2f", volumaaño);
+           String resuvolumano = String.format("%.2f", volumaano);
 
-           textvolumenapro.setText("Volumen de aproximación de 1 año = " + resuvolumaño);
+           textvolumenapro.setText("Volumen de aproximación de 1 año = " + resuvolumano);
 
         } catch (IOException e) {
             // TODO Handle the exception

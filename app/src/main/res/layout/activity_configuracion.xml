@@ -8,53 +8,57 @@
     android:id="@+id/drawerLayout"
     tools:context=".ConfiguracionActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_color"
         android:orientation="vertical">
 
-        <include layout="@layout/toolbar" />
+        <include
+            android:id="@+id/include2"
+            layout="@layout/toolbar" />
 
         <Button
             android:id="@+id/btnRepo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="28dp"
             android:backgroundTint="#5DC1B9"
             android:text="Repositorio"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/uteq" />
 
         <Button
             android:id="@+id/btnRepoM"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:backgroundTint="#5DC1B9"
             android:text="Repositorio Manual"
-            android:layout_marginTop="10dp"
             android:textAlignment="center"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnRepo" />
 
-        <Button
-            android:id="@+id/btnTe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#5DC1B9"
-            android:text="Tema"
-            android:layout_marginTop="10dp"
-            android:textAlignment="center"
-            android:textSize="20sp"/>
 
         <ImageView
             android:id="@+id/uteq"
-            android:layout_width="match_parent"
-            android:layout_height="409dp"
-            android:src="@drawable/img"
-            android:layout_marginTop="33dp"/>
+            android:layout_width="177dp"
+            android:layout_height="144dp"
+            android:layout_marginTop="28dp"
+            android:src="@drawable/img_3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include2" />
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
         android:layout_width="300dp"

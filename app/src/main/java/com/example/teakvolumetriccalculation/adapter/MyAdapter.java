@@ -39,9 +39,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
         User user = userArrayList.get(position);
-        holder.imageUrl.setText(String.format("imageUrl: %s", user.getImageUrl()));
-        holder.volumen.setText(String.format("volumen: %s", user.getVolumen()));
-        holder.volumenAprox.setText(String.format("volumen aproximado en 1 año: %s", user.getVolumenAprox()));
+        holder.imageUrl.setText(String.format("imageUrl = %s", user.getImageUrl()));
+        holder.volumen.setText(String.format("%s", user.getVolumen()));
+        holder.volumenAprox.setText(String.format("%s", user.getVolumenAprox()));
 
         // Cargar imagen usando Picasso o similar
         /*Picasso.get().load(user.getImagenUrl()).into(holder.imageView);

@@ -1,19 +1,19 @@
 package com.example.teakvolumetriccalculation;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,7 +28,7 @@ public class CalculoManualActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout inicio, configuracion, compartir, repositorio, tema, calculadora, repositoriomanual;
+    LinearLayout inicio, configuracion, repositorio, tema, calculadora, repositoriomanual;
 
     EditText diamet, alturac, factorf, consta;
     TextView txtresults10, results;
@@ -54,11 +54,8 @@ public class CalculoManualActivity extends AppCompatActivity {
         menu = findViewById(R.id.menu);
         inicio = findViewById(R.id.home);
         configuracion = findViewById(R.id.settings2);
-        compartir = findViewById(R.id.share);
-        repositorio = findViewById(R.id.report2);
         tema = findViewById(R.id.theme);
         calculadora = findViewById(R.id.calculate);
-        repositoriomanual = findViewById(R.id.repositorio);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,18 +75,6 @@ public class CalculoManualActivity extends AppCompatActivity {
                 redirecActivity(CalculoManualActivity.this, ConfiguracionActivity.class);;
             }
         });
-        compartir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                redirecActivity(CalculoManualActivity.this, CompartirActivity.class);
-            }
-        });
-        repositorio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                redirecActivity(CalculoManualActivity.this, RepositorioActivity3.class);
-            }
-        });
         tema.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,12 +85,6 @@ public class CalculoManualActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 recreate();
-            }
-        });
-        repositoriomanual.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                redirecActivity(CalculoManualActivity.this, RepositorioManualActivity.class);
             }
         });
     }
@@ -146,7 +125,7 @@ public class CalculoManualActivity extends AppCompatActivity {
 
 
         // Calcular el resultado de aproximación de un año
-        double result = Math.pow(diametro, 2) + 0.03 * altura + 1.6 * factorForma * constante;
+        double result = Math.pow(diametro + 0.03, 2) * altura + 1.6 * factorForma * constante;
 
         // Formatear el resultado a dos decimales
         String resultFormateado = String.format("%.2f", result); // Para dos decimales

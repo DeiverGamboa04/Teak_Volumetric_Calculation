@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
     Uri imagenUri;
 
     ImageView mImageView;
-    TextView txtResults, textvolumenapro;
+    TextView txtResults, textvolumenapro, valordediam, valordealtur, valordefor, valordecons;
     Button btGuar;
 
     DrawerLayout drawerLayout;
@@ -95,6 +95,10 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
         txtResults = findViewById(R.id.txtresults);
         textvolumenapro = findViewById(R.id.textvolumenapro);
         btGuar = findViewById(R.id.btGuar);
+        valordediam = findViewById(R.id.valordediam);
+        valordealtur = findViewById(R.id.valordealtur);
+        valordefor = findViewById(R.id.valordefor);
+        valordecons = findViewById(R.id.valordecons);
 
 
         drawerLayout = findViewById(R.id.drawerLayout);
@@ -423,6 +427,19 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
 
            textvolumenapro.setText("Volumen de aproximación de 1 año = " + resuvolumano);
 
+
+
+
+          String valordiam = String.format(String.valueOf(diametroValue));
+          String valoraltu = String.format(String.valueOf(alturaComercialValue));
+          String valorfor = String.format(String.valueOf(factorDeForma));
+          String valorcons = String.format(String.valueOf(constante));
+
+          valordediam.setText("D=" + valordiam);
+          valordealtur.setText("hc=" + valoraltu);
+          valordefor.setText("FF=" + valorfor);
+          valordecons.setText("Cc=" + valorcons);
+
         } catch (IOException e) {
             // TODO Handle the exception
         }
@@ -457,6 +474,10 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
 
                                     Map<String, Object> dataToSave = new HashMap<>();
                                     dataToSave.put("imageUrl", downloadUrl);
+                                    dataToSave.put("diametro", valordediam.getText().toString());
+                                    dataToSave.put("alturacomercial", valordealtur.getText().toString());
+                                    dataToSave.put("factorforma", valordefor.getText().toString());
+                                    dataToSave.put("constante", valordecons.getText().toString());
                                     dataToSave.put("volumen", txtResults.getText().toString());
                                     dataToSave.put("volumenAprox", textvolumenapro.getText().toString());
 
@@ -504,6 +525,10 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
         /*Limpiar*/
         txtResults.setText("");
         textvolumenapro.setText("");
+        valordediam.setText("");
+        valordealtur.setText("");
+        valordefor.setText("");
+        valordecons.setText("");
         mImageView.setImageDrawable(null);
         mImageView.setImageBitmap(null);
     }

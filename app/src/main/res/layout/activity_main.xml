@@ -46,8 +46,8 @@
 
         <ImageView
             android:id="@+id/imageviewteca"
-            android:layout_width="381dp"
-            android:layout_height="385dp"
+            android:layout_width="375dp"
+            android:layout_height="370dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,12 +58,12 @@
             android:layout_width="368dp"
             android:layout_height="49dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="52dp"
             android:inputType="numberDecimal"
             android:scrollbars="vertical"
             android:text="Volumen:"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.372"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageviewteca" />
 
@@ -81,10 +81,10 @@
             android:typeface="serif"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.203"
+            app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtresults"
-            app:layout_constraintVertical_bias="0.734" />
+            app:layout_constraintVertical_bias="0.752" />
 
         <Button
             android:id="@+id/btLimpiar"
@@ -100,26 +100,76 @@
             android:typeface="serif"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.554"
+            app:layout_constraintHorizontal_bias="0.489"
             app:layout_constraintStart_toEndOf="@+id/btGuar"
             app:layout_constraintTop_toBottomOf="@+id/txtresults"
-            app:layout_constraintVertical_bias="0.734" />
+            app:layout_constraintVertical_bias="0.752" />
 
         <TextView
             android:id="@+id/textvolumenapro"
             android:layout_width="368dp"
             android:layout_height="49dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="3dp"
             android:layout_marginBottom="20dp"
             android:inputType="numberDecimal"
             android:scrollbars="vertical"
             android:text="Volumen de aproximación de 1 año:"
             app:layout_constraintBottom_toTopOf="@+id/btLimpiar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtresults" />
+            app:layout_constraintTop_toBottomOf="@+id/txtresults"
+            app:layout_constraintVertical_bias="0.166" />
+
+        <TextView
+            android:id="@+id/valordediam"
+            android:layout_width="71dp"
+            android:layout_height="19dp"
+            android:layout_marginStart="4dp"
+            android:inputType="numberDecimal"
+            android:text="D: "
+            app:layout_constraintBottom_toTopOf="@+id/txtresults"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageviewteca" />
+
+        <TextView
+            android:id="@+id/valordealtur"
+            android:layout_width="63dp"
+            android:layout_height="21dp"
+            android:layout_marginStart="40dp"
+            android:inputType="numberDecimal"
+            android:text="hc: "
+            app:layout_constraintBottom_toTopOf="@+id/txtresults"
+            app:layout_constraintStart_toEndOf="@+id/valordediam"
+            app:layout_constraintTop_toBottomOf="@+id/imageviewteca"
+            app:layout_constraintVertical_bias="0.483" />
+
+        <TextView
+            android:id="@+id/valordefor"
+            android:layout_width="75dp"
+            android:layout_height="21dp"
+            android:layout_marginStart="92dp"
+            android:inputType="numberDecimal"
+            android:text="FF: "
+            app:layout_constraintBottom_toTopOf="@+id/txtresults"
+            app:layout_constraintStart_toStartOf="@+id/valordealtur"
+            app:layout_constraintTop_toBottomOf="@+id/imageviewteca"
+            app:layout_constraintVertical_bias="0.483" />
+
+        <TextView
+            android:id="@+id/valordecons"
+            android:layout_width="71dp"
+            android:layout_height="21dp"
+            android:layout_marginEnd="4dp"
+            android:inputType="numberDecimal"
+            android:text="Cc: "
+            app:layout_constraintBottom_toTopOf="@+id/txtresults"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.727"
+            app:layout_constraintStart_toEndOf="@+id/valordefor"
+            app:layout_constraintTop_toBottomOf="@+id/imageviewteca"
+            app:layout_constraintVertical_bias="0.483" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

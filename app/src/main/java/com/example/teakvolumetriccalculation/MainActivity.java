@@ -183,6 +183,25 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
                 else {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
                 }
+
+                /*if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    Intent intentCamara = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                    } catch (IOException ex) {
+                        Toast.makeText(MainActivity.this, "Error al crear el archivo de imagen", Toast.LENGTH_SHORT).show();
+                    }
+                    if (photoFile != null) {
+                        imagenUri = FileProvider.getUriForFile(MainActivity.this,
+                                "com.example.teakvolumetriccalculation.fileprovider",
+                                photoFile);
+                        intentCamara.putExtra(MediaStore.EXTRA_OUTPUT, imagenUri);
+                        startActivityForResult(intentCamara, REQUEST_CAMERA);
+                    }
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+                }*/
             }
         });
     }
@@ -403,6 +422,7 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
            String[] classesAlturaC = {"5", "6", "7", "8", "9", "10", "11"};
            String[] classesDiametro = {"0.3565", "0.1655", "0.1719", "0.2165", "0.2228", "0.2324", "0.2387", "0.2547", "0.2578", "0.2674", "0.2706", "0.2960", "0.3056", "0.3119", "0.3151", "0.3183", "0.3215", "0.3310", "0.3374", "0.1337", "0.3692"};
 
+
            float alturaComercialValue = Float.parseFloat(classesAlturaC[maxPosAltur]);
            float diametroValue = Float.parseFloat(classesDiametro[maxPosDiam]);
 
@@ -428,17 +448,15 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
            textvolumenapro.setText("Volumen de aproximación de 1 año = " + resuvolumano);
 
 
-
-
           String valordiam = String.format(String.valueOf(diametroValue));
           String valoraltu = String.format(String.valueOf(alturaComercialValue));
           String valorfor = String.format(String.valueOf(factorDeForma));
           String valorcons = String.format(String.valueOf(constante));
 
-          valordediam.setText("D=" + valordiam);
-          valordealtur.setText("hc=" + valoraltu);
-          valordefor.setText("FF=" + valorfor);
-          valordecons.setText("Cc=" + valorcons);
+          valordediam.setText("D = " + valordiam);
+          valordealtur.setText("hc = " + valoraltu);
+          valordefor.setText("FF = " + valorfor);
+          valordecons.setText("Cc = " + valorcons);
 
         } catch (IOException e) {
             // TODO Handle the exception
@@ -481,7 +499,7 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
                                     dataToSave.put("volumen", txtResults.getText().toString());
                                     dataToSave.put("volumenAprox", textvolumenapro.getText().toString());
 
-                                    db.collection("datosParcela").add(dataToSave)
+                                    db.collection("datosParcelaTeca").add(dataToSave)
                                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                 @Override
                                                 public void onSuccess(DocumentReference documentReference) {

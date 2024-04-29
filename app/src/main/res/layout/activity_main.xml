@@ -137,7 +137,7 @@
             android:id="@+id/valordealtur"
             android:layout_width="63dp"
             android:layout_height="21dp"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="20dp"
             android:inputType="numberDecimal"
             android:text="hc: "
             app:layout_constraintBottom_toTopOf="@+id/txtresults"
@@ -147,9 +147,9 @@
 
         <TextView
             android:id="@+id/valordefor"
-            android:layout_width="75dp"
+            android:layout_width="63dp"
             android:layout_height="21dp"
-            android:layout_marginStart="92dp"
+            android:layout_marginStart="84dp"
             android:inputType="numberDecimal"
             android:text="FF: "
             app:layout_constraintBottom_toTopOf="@+id/txtresults"
@@ -166,7 +166,7 @@
             android:text="Cc: "
             app:layout_constraintBottom_toTopOf="@+id/txtresults"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.727"
+            app:layout_constraintHorizontal_bias="0.395"
             app:layout_constraintStart_toEndOf="@+id/valordefor"
             app:layout_constraintTop_toBottomOf="@+id/imageviewteca"
             app:layout_constraintVertical_bias="0.483" />

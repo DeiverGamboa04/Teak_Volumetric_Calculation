@@ -39,6 +39,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
         User user = userArrayList.get(position);
         /*holder.imageUrl.setText(String.format("imageUrl = %s", user.getImageUrl()));*/
+        holder.diametro.setText(String.format("%s", user.getDiametro()));
+        holder.alturacomercial.setText(String.format("%s", user.getAlturacomercial()));
+        holder.factorforma.setText(String.format("%s", user.getFactorforma()));
+        holder.constante.setText(String.format("%s", user.getConstante()));
         holder.volumen.setText(String.format("%s", user.getVolumen()));
         holder.volumenAprox.setText(String.format("%s", user.getVolumenAprox()));
 
@@ -57,12 +61,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView volumen, volumenAprox;
+        TextView diametro, alturacomercial, factorforma, constante, volumen, volumenAprox;
         ImageView imageUrl;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imageUrl = itemView.findViewById(R.id.imageurltecaobservado);
+            diametro = itemView.findViewById(R.id.textViewDiame);
+            alturacomercial = itemView.findViewById(R.id.textViewAltur);
+            factorforma = itemView.findViewById(R.id.textViewFactor);
+            constante = itemView.findViewById(R.id.textViewCons);
             volumen = itemView.findViewById(R.id.textViewVolum);
             volumenAprox = itemView.findViewById(R.id.textViewVolumAprox);
         }

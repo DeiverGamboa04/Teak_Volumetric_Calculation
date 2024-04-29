@@ -139,7 +139,7 @@ public class RepositorioActivity3 extends AppCompatActivity {
     }
 
     private void loadDatas() {
-        dbd.collection("datosParcela")
+        dbd.collection("datosParcelaTeca")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

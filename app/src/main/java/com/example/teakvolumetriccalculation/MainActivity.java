@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -183,25 +182,6 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
                 else {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
                 }
-
-                /*if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                    Intent intentCamara = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File photoFile = null;
-                    try {
-                        photoFile = createImageFile();
-                    } catch (IOException ex) {
-                        Toast.makeText(MainActivity.this, "Error al crear el archivo de imagen", Toast.LENGTH_SHORT).show();
-                    }
-                    if (photoFile != null) {
-                        imagenUri = FileProvider.getUriForFile(MainActivity.this,
-                                "com.example.teakvolumetriccalculation.fileprovider",
-                                photoFile);
-                        intentCamara.putExtra(MediaStore.EXTRA_OUTPUT, imagenUri);
-                        startActivityForResult(intentCamara, REQUEST_CAMERA);
-                    }
-                } else {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
-                }*/
             }
         });
     }
@@ -271,28 +251,6 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
         } else {
             return Uri.fromFile(file);
         }
-
-        /*String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        File storageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "MyAppImages");
-        if (!storageDir.exists()) {
-            if (!storageDir.mkdirs()) {
-                Log.e("TAG", "Failed to create directory");
-                return null;
-            }
-        }
-
-        // Crea el archivo
-        File imageFile = new File(storageDir, "JPEG_" + timeStamp + ".jpg");
-        try (FileOutputStream out = new FileOutputStream(imageFile)) {
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
-            out.flush();
-        } catch (IOException e) {
-            Log.e("TAG", "Error saving image", e);
-            return null;
-        }
-
-        // Retorna el Uri utilizando un FileProvider
-        return FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", imageFile);*/
     }
 
     @Override
@@ -300,20 +258,11 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CAMERA) {
-                Bitmap mSelectedImage = (Bitmap) data.getExtras().get("data");
-                // Otras operaciones con el bitmap...
-                int dimension = Math.min(mSelectedImage.getWidth(), mSelectedImage.getHeight());
-                mSelectedImage = ThumbnailUtils.extractThumbnail(mSelectedImage, dimension, dimension);
-                /*imagenUri = bitmapToUri(mSelectedImage);*/
+                Bundle extras = data.getExtras();
+                Bitmap mSelectedImage = (Bitmap) extras.get("data");
                 mImageView.setImageBitmap(mSelectedImage);
-                /*imagenUri = bitmapToUri(mSelectedImage);*/
-                /*calculo(imagenUri);*/
-
-
-                // Otras operaciones con el bitmap...
-                /*imagenUri = bitmapToUri(mSelectedImage); // Convierte el bitmap a Uri*/
-                /*mImageView.setImageBitmap(mSelectedImage);
-                calculo(imagenUri);*/
+                imagenUri = getImageUriFromBitmap(mSelectedImage);
+                calculo(imagenUri);
             } else if (data != null && data.getData() != null) {
                 Uri dat = data.getData();
                 imagenUri = dat; // Aquí ya tienes un Uri, no necesitas convertirlo
@@ -321,6 +270,11 @@ public class MainActivity extends AppCompatActivity /*implements OnSuccessListen
                 calculo(imagenUri);
             }
         }
+    }
+
+    private Uri getImageUriFromBitmap(Bitmap inImage) {
+        String path = MediaStore.Images.Media.insertImage(getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     public void calculo(Uri imagenUri){

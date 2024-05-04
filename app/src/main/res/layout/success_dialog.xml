@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/successDes"
-            android:text="Tomar las fotografia a una distancia de 5 metros y a la altura del pecho y una distancia del pecho de 1 metro."
+            android:text="Tomar las fotografias a una distancia de 5 metros del cultivo, y a una altura del pecho con una distancia de 1 metro del pecho."
             android:textColor="@color/black"
             android:gravity="center_horizontal"
             android:textSize="18sp"
